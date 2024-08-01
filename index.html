@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="new.css">
+    
+</head>
+<body>
+    <div class="calculator">
+        <input type="text" class="calculator-screen" value="" />
+        <div class="calculator-keys text-lg">
+            <button type="button" class="operator" value="+">+</button>
+            <button type="button" class="operator" value="-">-</button>
+            <button type="button" class="operator" value="*">&times;</button>
+            <button type="button" class="operator" value="/">&divide;</button>
+            <button type="button" class="operator" value="**">&exponentiale;</button>
+            <button type="button" class="parenthesis" value="(">(</button>
+            <button type="button" class="parenthesis" value=")">)</button>
+            <button type="button" class="operator" value="√">&Sqrt;</button>
+            <button type="button" class="trig" value="sin">sin</button>
+            <button type="button" class="trig" value="cos">cos</button>
+            <button type="button" class="trig" value="tan">tan</button>
+            <button class="constant" value="pi">&pi;</button>
+            <button class="constant" value="e">e</button>
+
+            <button type="button" value="7">7</button>
+            <button type="button" value="8">8</button>
+            <button type="button" value="9">9</button>
+
+            <button type="button" value="4">4</button>
+            <button type="button" value="5">5</button>
+            <button type="button" value="6">6</button>
+
+            <button type="button" value="1">1</button>
+            <button type="button" value="2">2</button>
+            <button type="button" value="3">3</button>
+
+            <button type="button" value="0">0</button>
+            <button type="button" class="decimal" value=".">.</button>
+            <button type="button" class="all-clear" value="all-clear">AC</button>
+
+            <button type="button" class="equal-sign operator" value="=">=</button>
+        </div>
+    </div>
+
+    <div class="calculator-history">
+        <h3>History</h3>
+        <ul id="history-list"></ul>
+    </div>
+</div>
+    <script src="calculator.js"></script>
+    
+</body>
+</html>
