@@ -1,12 +1,11 @@
-//develop branch(just to understand the git)
-//I am maham
+
 const calculator = {
     displayValue: '0',
     firstOperand: null,
     typeSecondOperand: false,
     operator: null,
     expression: "",
-    history: [],
+    history: []
 };
 
 function inputDigit(digit) {
@@ -29,7 +28,7 @@ function inputDecimal(dot) {
 
     if (!calculator.displayValue.includes(dot)) {
        calculator.displayValue += dot;
-    }
+   }
 }
 
 function inputConstant(constant) {
@@ -60,7 +59,7 @@ function handleOperator(nextOperator) {
     if (operator && calculator.typeSecondOperand) {
         calculator.operator = nextOperator;
         calculator.expression = calculator.expression.slice(0, -1) + nextOperator;
-        return;
+       return;
     }
     if (nextOperator === '√') {
         const result = calculate(inputValue, null, nextOperator);
@@ -76,6 +75,9 @@ function handleOperator(nextOperator) {
         calculator.firstOperand = inputValue;
     } else if (operator) {
         const result = calculate(firstOperand, inputValue, operator);
+        addToHistory(calculator.expression, result);
+        //deleteHistoryItem(index)
+       // reuseHistoryItem(index);
 
         calculator.displayValue = `${parseFloat(result.toFixed(4))}`;
         calculator.firstOperand = result;
@@ -135,8 +137,8 @@ function evaluateExpression() {
             throw new Error("Division by zero");
         }
         const resultStr = `${parseFloat(result.toFixed(4))}`;
-
-        addToHistory(calculator.expression, resultStr);
+        console.log("resultStr : ", resultStr, "expression : ", calculator.expression)
+        //addToHistory(calculator.expression, resultStr);
         calculator.displayValue = resultStr;
         calculator.expression = resultStr;
         calculator.firstOperand = result;
@@ -161,12 +163,13 @@ function resetCalculator() {
     calculator.displayValue = '0';
     calculator.firstOperand = null;
     calculator.typeSecondOperand = false;
-    calculator.operator = null;
+      calculator.operator = null;
 }
 
 function addToHistory(expression, result) {
     const historyItem = { expression, result };
     calculator.history.push(historyItem);
+    console.log(calculator.history)
     updateHistoryDisplay();
 }
 
@@ -174,8 +177,11 @@ function updateHistoryDisplay() {
     const historyList = document.getElementById('history-list');
     historyList.innerHTML = '';
 
+
+    console.log("Update : ", calculator.history)
     calculator.history.forEach((item, index) => {
         const listItem = document.createElement('li');
+        listItem.classList.add('text-content');
         listItem.textContent = `${item.expression} = ${item.result}`;
         listItem.dataset.index = index;
 
@@ -185,6 +191,7 @@ function updateHistoryDisplay() {
         deleteButton.dataset.index = index;
         listItem.appendChild(deleteButton);
         historyList.appendChild(listItem);
+        console.log("${item.expression} = ${item.result} : ", `${item.expression} = ${item.result}`)
     });
 }
 
@@ -264,9 +271,19 @@ document.getElementById('history-list').addEventListener('click', (event) => {
 
     if (target.matches('button.delete-history')) {
         const index = target.dataset.index;
+        console.log(index);
         deleteHistoryItem(index);
-    } else if (target.matches('li')) {
-        const index = target.dataset.index;
-        reuseHistoryItem(index);
+
     }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.list-item').forEach((item, index) => {
+        item.addEventListener('click', (event) => {
+            const { target } = event;
+            if (target.matches('.text-content') || target.matches('.list-item')) {
+                reuseHistoryItem(index);
+            }
+        });
+    });
 });
