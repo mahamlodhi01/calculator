@@ -19,6 +19,17 @@ function inputDigit(digit) {
     }
 }
 
+function toggleHistory() {
+    const historyList = document.getElementById('history-list');
+    if (historyList.style.display === 'none' || historyList.style.display === '') {
+        historyList.style.display = 'block';
+        document.querySelector('.history-toggle').textContent = 'Hide History';
+    } else {
+        historyList.style.display = 'none';
+        document.querySelector('.history-toggle').textContent = 'Show History';
+    }
+}
+
 function inputDecimal(dot) {
     if (calculator.typeSecondOperand === true) {
         calculator.displayValue = '0.';
