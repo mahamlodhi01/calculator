@@ -40,6 +40,7 @@ function inputDecimal(dot) {
     if (!calculator.displayValue.includes(dot)) {
        calculator.displayValue += dot;
    }
+   calculator.expression += digit;
 }
 
 function inputConstant(constant) {
@@ -87,8 +88,6 @@ function handleOperator(nextOperator) {
     } else if (operator) {
         const result = calculate(firstOperand, inputValue, operator);
         addToHistory(calculator.expression, result);
-        //deleteHistoryItem(index)
-       // reuseHistoryItem(index);
 
         calculator.displayValue = `${parseFloat(result.toFixed(4))}`;
         calculator.firstOperand = result;
@@ -148,8 +147,8 @@ function evaluateExpression() {
             throw new Error("Division by zero");
         }
         const resultStr = `${parseFloat(result.toFixed(4))}`;
-        console.log("resultStr : ", resultStr, "expression : ", calculator.expression)
-        //addToHistory(calculator.expression, resultStr);
+        
+        addToHistory(calculator.expression, resultStr);
         calculator.displayValue = resultStr;
         calculator.expression = resultStr;
         calculator.firstOperand = result;
@@ -175,12 +174,12 @@ function resetCalculator() {
     calculator.firstOperand = null;
     calculator.typeSecondOperand = false;
       calculator.operator = null;
+      calculate.expression = "";
 }
 
 function addToHistory(expression, result) {
     const historyItem = { expression, result };
     calculator.history.push(historyItem);
-    console.log(calculator.history)
     updateHistoryDisplay();
 }
 
@@ -188,21 +187,18 @@ function updateHistoryDisplay() {
     const historyList = document.getElementById('history-list');
     historyList.innerHTML = '';
 
-
-    console.log("Update : ", calculator.history)
     calculator.history.forEach((item, index) => {
         const listItem = document.createElement('li');
-        listItem.classList.add('text-content');
-        listItem.textContent = `${item.expression} = ${item.result}`;
-        listItem.dataset.index = index;
+        listItem.classList.add('list-item');
+        listItem.innerHTML = `<span class="text-content">${item.expression} = ${item.result}</span>`;
 
         const deleteButton = document.createElement('button');
         deleteButton.textContent = 'Delete';
         deleteButton.classList.add('delete-history');
         deleteButton.dataset.index = index;
         listItem.appendChild(deleteButton);
+        listItem.dataset.index = index;
         historyList.appendChild(listItem);
-        console.log("${item.expression} = ${item.result} : ", `${item.expression} = ${item.result}`)
     });
 }
 
